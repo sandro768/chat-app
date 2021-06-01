@@ -1,13 +1,10 @@
 import express from 'express'
-import mongoose from 'mongoose'
-import bodyParser from 'body-parser';
+import bodyParser from 'body-parser'
 import * as dotenv from 'dotenv'
 import intentsRoutes from './routes/intents'
 
 const app = express()
 dotenv.config()
-// require('dotenv').config()
-const port = 8080
 
 app.use(bodyParser.json())
 
@@ -21,14 +18,4 @@ app.use((req, res, next) => {
 
 app.use('/intents', intentsRoutes)
 
-mongoose
-  .connect(
-    `mongodb+srv://sandro:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}/chat?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => {
-    app.listen(port, () => console.log(`Running on port ${port}`))
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+export default app
